@@ -10,3 +10,8 @@
 查询：Hive  
 可视化：Kibana  
 工具层：Kylin  
+
+## 资源
+[大数据资源](https://zhuanlan.zhihu.com/p/26742893)  
+[大数据基础](https://zhuanlan.zhihu.com/p/30969317)  
+[大数据技术栈](https://zhuanlan.zhihu.com/p/51973232)  
