@@ -4,8 +4,9 @@
 3. 指定namenode软件存储元数据的本地目录  
 4. 指定datanode软件存放文件块的本地目录 
 
-注意：需要关闭防火墙
-安装使用的Hadoop版本: hadoop-3.1.2, 与2.X有些许区别，比如端口号
+注意：需要关闭防火墙   
+安装使用的Hadoop版本: hadoop-3.1.2, 与2.X有些许区别，比如端口号  
+hadoop官网：https://hadoop.apache.org/  
 
 ## hadoop配置文件
 目录：${install-path}/etc/hadoop   
