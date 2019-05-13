@@ -36,7 +36,8 @@ hadoop官网：https://hadoop.apache.org/
 </configuration>
 ```
 ## 启动HDFS
-1. 配置hadoop环境变量  
+1. 配置hadoop环境变量   
+配置HADOOP_HOME及PATH    
 
 2. 初始化namenode的元数据目录  
 > hdfs namenode -format

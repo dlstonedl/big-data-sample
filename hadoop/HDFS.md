@@ -35,7 +35,13 @@ checkpoint机制：下载edits日志文件，并合并edits日志文件至fsimag
 10. 数据全部写完后，告知namenode
 11. namenode确认记录元数据
 
-只需要有一个datanode写成功即可，副本可有namenode同步；  
+只需要有一个datanode写成功即可，副本可由namenode同步；  
 如果第一个datanode写失败，会重试namenode返回的下一个datanode；  
-如果最后一个block失败，namenode删除元数据，并由namenode在于datanode通信时，删除脏数据；  
+如果最后一个block失败，namenode删除元数据，并由namenode在与datanode通信时，删除脏数据；  
 分布式系统的复杂性，在于异常情况的处理，而不是正常的业务流程；   
+
+## 读数据流程
+
+1. 客户端请求namenode，请求元数据； 
+2. 根据元数据，挑选datanode，请求每个block的数据；  
+3. 读取block数据，并拼接；  
