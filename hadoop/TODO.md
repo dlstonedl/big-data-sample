@@ -15,3 +15,5 @@ Phoneix: 使用于频繁写但读取少的事务型场景，OLTP，联机事务�
 
 Alluxio: 开源的基于内存的分布式存储系统
 
+Hive+MapReduce  SparkSQL(Hive on Spark)
+Storm/JStorm    Spark Streaming 
