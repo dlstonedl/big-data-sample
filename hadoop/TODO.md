@@ -17,3 +17,7 @@ Alluxio: 开源的基于内存的分布式存储系统
 
 Hive+MapReduce  SparkSQL(Hive on Spark)
 Storm/JStorm    Spark Streaming 
+
+梳理spark中的技术，哪些更实用
+Spark SQL(old), DataFrames, Datasets
+Spark Streaming(old), Structured Streaming

@@ -41,7 +41,9 @@ HDFS客户端：命令行客户端与网页客户端
 
 命令行客户端：用户通过命令行，访问HDFS文件系统  
 hadoop fs -ls /   
-hadoop fs -cat filename    
+hadoop fs -cat filename  
+
+hdfs dfs -ls /  
 
        
 
