@@ -28,8 +28,27 @@ aggregateByKey  相同key才聚合，初始值只会在分区中使用；
 collect会将数据拉到Driver端，数据量大会压垮机器，存在瓶颈，应该直接在Executor中写入数据库
 Driver遇到Action时，会从后往前推导所有的算子，并计算分区数；Task在Driver端生成，通过网络发送给Executor；    
 Driver默认最大收集1G数据，超过1G则不处理；   
-  
 
+collect: Action
+aggregate: Action
+saveAsTextFile: Action
+foreach: Action, Executor单条处理
+foreachPartition: Action, Executor批量处理  
+
+## RDD五大特征
+1. 一系列分区，分区有编号，有顺序
+2. 每个切片都有一个函数，用于对数据进行处理
+3. RDD和RDD之间存在依赖关系
+4. 可选，(k, v)类型的RDD，有一个分区器，默认是hash-partition
+5. 可选，如果是从HDFS中读取数据，会得到数据的最优位置
+
+shuffleMapTask
+resultTask
+stage(阶段)
+
+shuffle: spark re-distributing 数据的机制，是一种复杂而昂贵的操作，往上游拉取数据，groupBy,需要重新shuffle
+
+2.0之前，RDD是spark主要的编程接口，2.0以后，Dataset取代了RDD
 
 
      
