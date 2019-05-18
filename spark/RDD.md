@@ -1,7 +1,7 @@
 # RDD
 弹性分布式数据集(Resilient Distributed Datasets)，RDD不存储真正要计算的数据；            
 对RDD操作，会在Driver端转换成Task，下发到Executor计算分散在多台机器上的数据；          
-RDD是一个抽象，逻辑上的概念；             
+RDD是一个抽象，逻辑上的概念；RDD记录的是元数据信息，而不是具体的数据；                
 
 RDD是一个代理，对代理进行操作会生成Task进行计算，操作代理就像操作一个本地集合一样，
 不用关心任务调度，容错等；  
@@ -42,9 +42,24 @@ foreachPartition: Action, Executor批量处理
 4. 可选，(k, v)类型的RDD，有一个分区器，默认是hash-partition
 5. 可选，如果是从HDFS中读取数据，会得到数据的最优位置
 
-shuffleMapTask
-resultTask
-stage(阶段)
+## 共享变量
+1. 广播变量
+2. 累加器
+
+## 运行模式
+1. 本地模式，local
+2. 集群模式，spark-submit 
+
+## wordCount
+HadoopRDD(K,V) -> MapPartitionsRDD(String) -> 
+MapPartitionsRDD(String) -> MapPartitionsRDD(String, Int) -> 
+shuffleRDD(String, Int) -> MapPartitionsRDD(NullWritable, text)    
+每个分区生成2个Task：shuffleMapTask(读数据，进行计算，写入本地磁盘)，resultTask(拉取数据，进行计算，写入HDFS)；   
+一共2个stage(阶段)，每个stage一个Task；     
+shuffleMapTask数据，一定会写入本地磁盘，防止数据丢失；  
+
+DAG，有向无环图
+
 
 shuffle: spark re-distributing 数据的机制，是一种复杂而昂贵的操作，往上游拉取数据，groupBy,需要重新shuffle
 
