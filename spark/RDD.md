@@ -42,6 +42,25 @@ foreachPartition: Action, Executor批量处理
 4. 可选，(k, v)类型的RDD，有一个分区器，默认是hash-partition
 5. 可选，如果是从HDFS中读取数据，会得到数据的最优位置
 
+## cache 
+数据缓存在Executor机器内存中；   
+多次触发Action，才需要cache(cache)；   
+缓存中的数据可以手动释放到(unpersist)；   
+如果数据量太大，cache只会缓存一部分数据至内存，其他数据不缓存； 
+建议先将数据过滤，缩小范围，然后再将数据缓存； 
+cache不会生成新的RDD，只会标记RDD为cache；
+cache底层是persist方法，默认存储级别为MEMORY_ONLY；
+
+## persist
+将HDFS中的数据缓存在executor端，可以指定缓存到**磁盘**或**内存**或**磁盘+内存**，可以指定缓存的份数(不同的机器)，可以指定是否序列化；    
+OFF_HEAP: 堆外内存， 可以使用Alluxio，分布式内存存储系统
+
+## checkpoint
+1. 迭代计算，要求保证数据安全
+2. 对速度要求不高(跟cache到内存对比)
+3. 将中间结果保存到hdfs
+cache优先于checkpoint
+
 ## 共享变量
 1. 广播变量
 2. 累加器
@@ -56,7 +75,7 @@ MapPartitionsRDD(String) -> MapPartitionsRDD(String, Int) ->
 shuffleRDD(String, Int) -> MapPartitionsRDD(NullWritable, text)    
 每个分区生成2个Task：shuffleMapTask(读数据，进行计算，写入本地磁盘)，resultTask(拉取数据，进行计算，写入HDFS)；   
 一共2个stage(阶段)，每个stage一个Task；     
-shuffleMapTask数据，一定会写入本地磁盘，防止数据丢失；  
+shuffleMapTask数据，一定会写入本地磁盘，防止数据丢失； 
 
 DAG，有向无环图
 

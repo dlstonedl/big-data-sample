@@ -38,7 +38,7 @@ sbin目录不建议配置到PATH路径中，避免与Hadoop命令重复
 
 ## 执行流程
 SparkSubmit(Driver): 上传Jar包并调度Executor 
-SparkSubmit -> 请求Master -> 通知Worker创建Executor -> Executor自动连接SparkSubmit
+SparkSubmit -> 请求Master -> Master通知Worker创建Executor -> Executor自动连接SparkSubmit
 
 CoarseGrainedExecutorBackend(Executor): 具体执行计算逻辑  
 SparkSubmit分发Task -> Executor
