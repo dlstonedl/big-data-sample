@@ -48,7 +48,7 @@ foreachPartition: Action, Executor批量处理
 缓存中的数据可以手动释放到(unpersist)；   
 如果数据量太大，cache只会缓存一部分数据至内存，其他数据不缓存； 
 建议先将数据过滤，缩小范围，然后再将数据缓存； 
-cache不会生成新的RDD，只会标记RDD为cache；
+cache不会生成新的RDD，只会标记RDD为cache，action的时候会触发；
 cache底层是persist方法，默认存储级别为MEMORY_ONLY；
 
 ## persist
@@ -59,7 +59,53 @@ OFF_HEAP: 堆外内存， 可以使用Alluxio，分布式内存存储系统
 1. 迭代计算，要求保证数据安全
 2. 对速度要求不高(跟cache到内存对比)
 3. 将中间结果保存到hdfs
+checkout不会生成新的RDD，只会进行标记，action的时候会触发；
+需要设置checkout的目录，一般是hdfs目录；
 cache优先于checkpoint
+
+## 广播变量
+由Driver端生成，并广播到对应的Task；
+广播变量广播后，就不能改变；如果需要改变，可以从分布式内存系统中读取，如redis；
+广播变量可以从hdfs文件中生成，然后收集到Driver端，再进行广播；
+
+## JDBC RDD
+spark可以从多个数据源读取数据，本身有JdbcRDD,MongoRDD等；
+问题：[1,5)，2个分区，   
+id >= 1 AND id < 2    
+id >= 3 AND id < 5    
+导致记录2丢失；
+
+## spark总体流程
+RDD -> DAG -> Task -> Executor
+1. 构建DAG(调用RDD上的方法，Driver)
+2. DAGScheduler将DAG切分stage，将stage生成的Task以TaskSet的形式给TaskScheduler（切分的依据是shuffle，Driver）
+3. TaskScheduler调度Task（根据资源情况将Task调度到相应的Executor中，涉及序列化，Driver）
+4. Executor接收Task，然后将Task放入线程池中执行（Executor）
+
+## DAG
+有向无环图，数据执行过程，有方向，无闭环
+DAG描述多个**RDD的转换过程**，任务执行时，可以按照DAG的描述执行真正的计算（数据被操作的一个过程）
+DAG有边界，开始（sparkContext创建RDD），结束（触发action，调用run job）；
+一个spark中有1到多个DAG，取决于触发action次数；
+一个RDD只是描述一个环节，DAG由一至多个RDD组成，描述数据的整个过程；
+一个DAG可能产生不同类型和功能的Task，会有不同的阶段；
+输出目录不能存在，否则报错；
+
+## stage
+切分stage：一个复杂的业务逻辑（将多台机器上的数据聚合到一台机器上：shuffle），如果有shuffle，则存在数据强依赖；
+同一个stage，会有多个算子，合并在一起，成为pipeline（流水线，有严格的顺序）
+
+## RDD依赖
+宽依赖：父RDD分区数据，给子RDD的多个分区（存在可能）
+窄依赖：map，filter，union等，父RDD分区数据，给子RDD的一个分区，独生子女
+
+shuffle：洗牌，将数据打散，父RDD一个分区数据，给子RDD的多个分区
+shuffle会有网络传输，有网络传输，并不意味着有shuffle
+
+RDD触发Action后，会根据这个RDD，从后往前推断依赖关系，遇到shuffle就切分stage，
+递归切分，直至没有父RDD
+切分完后，先提交前面的stage，执行完后提交后面的stage，stage会生成Task
+一个stage会生成很多业务逻辑相同的Task，网络传输时，设计序列化及反序列化
 
 ## 共享变量
 1. 广播变量
@@ -76,8 +122,6 @@ shuffleRDD(String, Int) -> MapPartitionsRDD(NullWritable, text)
 每个分区生成2个Task：shuffleMapTask(读数据，进行计算，写入本地磁盘)，resultTask(拉取数据，进行计算，写入HDFS)；   
 一共2个stage(阶段)，每个stage一个Task；     
 shuffleMapTask数据，一定会写入本地磁盘，防止数据丢失； 
-
-DAG，有向无环图
 
 
 shuffle: spark re-distributing 数据的机制，是一种复杂而昂贵的操作，往上游拉取数据，groupBy,需要重新shuffle
