@@ -26,3 +26,6 @@ DataFrame方式
 
 2.x SparkSession
 
+## sparkSQL流程
+逻辑计划 -> 执行器优化 -> 物理计划 -> 集群运行
+
