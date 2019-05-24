@@ -16,21 +16,21 @@
 3. 数据持久化层；
 4. 数据展示层；
 
-数据采集: HDFS API; Flume; Logstash; Filebeat; Sqoop; Canal; DataX;
-数据存储: HDFS;
-数据离线计算: MapReduce; Hive(SQL On Hadoop); SparkSQL;
-数据实时计算: Storm; Spark Streaming;
-采集数据传输，多次消费: Kafka;
-任务调度监控系统: Oozie;
-实时查询存储: HBase(Kylin + Phoenix); Redis; MongoDB; ElasticSearch; Cassandra;
+数据采集: HDFS API; Flume; Logstash; Filebeat; Sqoop; Canal; DataX;     
+数据存储: HDFS;   
+数据离线计算: MapReduce; Hive(SQL On Hadoop); SparkSQL;    
+数据实时计算: Storm; Spark Streaming;    
+采集数据传输，多次消费: Kafka;   
+任务调度监控系统: Oozie;   
+实时查询存储: HBase(Kylin + Phoenix); Redis; MongoDB; ElasticSearch; Cassandra;   
 
 ## 大数据发展方向
 1. 运维；
 2. 架构；
 3. 统计分析；
 
-https://www.slideshare.net/Khalid-Imran/big-data-technology-stack-nutshell
-https://blog.panoply.io/the-big-data-stack-powering-data-lakes-data-warehouses-and-beyond
+https://www.slideshare.net/Khalid-Imran/big-data-technology-stack-nutshell   
+https://blog.panoply.io/the-big-data-stack-powering-data-lakes-data-warehouses-and-beyond    
 
 ## 资源
 [大数据资源](https://zhuanlan.zhihu.com/p/26742893)  
