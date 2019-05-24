@@ -22,10 +22,7 @@ object DataSetClassToDataFrame {
       Person(fields(0).toLong, fields(1), fields(2).toInt)
     })
 
-    val df: DataFrame = personDS.toDF()
-    df.createTempView("person")
-    val result: DataFrame = sparkSession.sql("select * from person")
+    val result: DataFrame = personDS.select("id", "name", "age")
     result.show()
-
   }
 }
