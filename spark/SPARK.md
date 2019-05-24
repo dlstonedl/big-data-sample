@@ -9,7 +9,7 @@ DAG,Spark高效的原因，合并计算算子(operation)到一个stage
 ## 语言
 Scala，Java，python，R，SQL 
 
-## 部署
+## 部署(standalone)
 主从结构：Master，Worker     
 spark可以单独安装，建议与Hadoop的DataNode安装在一起    
 建议移动计算，而不是移动数据    
@@ -43,8 +43,14 @@ SparkSubmit -> 请求Master -> Master通知Worker创建Executor -> Executor自�
 CoarseGrainedExecutorBackend(Executor): 具体执行计算逻辑  
 SparkSubmit分发Task -> Executor
 
+```
 spark-submit --master spark://localhost:7077 --class ${main-class-path} 
 ${executor-memory} ${executor-cores} ${jar-path} ${jar-params}
+
+./spark-submit --master spark://localhost:7077 --class org.apache.spark.examples.SparkPi \
+--executor-memory 1g --executor-cores 8  \
+${spark-path}/examples/jars/spark-examples_2.11-2.3.3.jar 50
+```
 
 ## YARN与standalone对比
 ResourceManager    Master       
@@ -58,8 +64,8 @@ NodeManager管理yarnChild，applicationMaster
 ## Spark Shell
 spark-shell，使用scala语言，方便学习与开发，会自动创建一个SparkSubmit       
 ```
-spark-shell --master spark://localhost:7077 
---executor-memory 5g --total-executor-cores 12
+./spark-shell --master spark://localhost:7077 --executor-memory 5g --total-executor-cores 12
+
 // 内存 5G，CPU 12个
 
 sc.textFile("hdfs//localhost:9000/wc")

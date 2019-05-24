@@ -7,11 +7,17 @@ hadoop fs -ls /
 hadoop fs -put <localsrc> <dst>  
 hadoop fs -get <src> <localsrc> 
 ``` 
+新版本命令行
+```
+hdfs dfs -ls /
+```
 
 待解决的问题(不影响使用，可以去namenode中查看文件信息) 
-> Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+```
+Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 
-
+可以使用hdfs dfs -ls /
+```
 ## namenode元数据管理机制
 内存(树)  
 fsimage(内存元数据对象序列化到磁盘)  
@@ -19,7 +25,6 @@ edits日志文件(滚动操作日志)
 
 secondary namenode  
 checkpoint机制：下载edits日志文件，并合并edits日志文件至fsimage，然后上传namenode   
-
 
 ## 写数据流程
 
