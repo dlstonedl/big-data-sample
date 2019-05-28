@@ -105,7 +105,7 @@ shuffle会有网络传输，有网络传输，并不意味着有shuffle
 RDD触发Action后，会根据这个RDD，从后往前推断依赖关系，遇到shuffle就切分stage，
 递归切分，直至没有父RDD
 切分完后，先提交前面的stage，执行完后提交后面的stage，stage会生成Task
-一个stage会生成很多业务逻辑相同的Task，网络传输时，设计序列化及反序列化
+一个stage会生成很多业务逻辑相同的Task，网络传输时，涉及序列化及反序列化
 
 ## 共享变量
 1. 广播变量

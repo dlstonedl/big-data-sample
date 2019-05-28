@@ -6,3 +6,7 @@ YARN(已学习) WordCount，ResourceManager及NodeManager基本原理
 SPARK(已学习) RDD，DataSet, DataFrame, DStream
 
 KAFKA
+HBase
+Scala
+Flume
+Sqoop
