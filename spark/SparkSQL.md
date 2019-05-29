@@ -29,3 +29,8 @@ DataFrame方式
 ## sparkSQL流程
 逻辑计划 -> 执行器优化 -> 物理计划 -> 集群运行
 
+## 数据格式
+jdbc：数据库
+json：json格式，没有值则为null
+csv：逗号隔开
+Parquet：列式存储
