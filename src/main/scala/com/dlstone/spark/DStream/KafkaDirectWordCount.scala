@@ -20,9 +20,9 @@ object KafkaDirectWordCount {
     val context = new StreamingContext(conf, Duration(5000))
 
     val group = "kafka-consumer-group"
-    val topic = "kafka-topic"
-    val brokerList = "broker1:port,broker2:port,broker3:port"
-    val zkList = "zk1:port,zk2:port,zk3:port"
+    val topic = "test"
+    val brokerList = "localhost:9092"
+    val zkList = "localhost:2181"
     val topics: Set[String] = Set(topic)
 
     val topicDirs = new ZKGroupTopicDirs(group, topic)

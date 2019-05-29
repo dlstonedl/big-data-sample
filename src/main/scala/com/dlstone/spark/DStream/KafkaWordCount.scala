@@ -12,9 +12,9 @@ object KafkaWordCount {
 
     val streamingContext = new StreamingContext(conf, Seconds(5))
 
-    val zkQuorum = "host:port,host:post,host:post"
+    val zkQuorum = "localhost:2181"
     val group = "kafka-group"
-    val topic = Map[String, Int]("xiaoniu" -> 1)
+    val topic = Map[String, Int]("test" -> 1)
 
     val data: ReceiverInputDStream[(String, String)] = KafkaUtils.createStream(streamingContext, zkQuorum, group, topic)
 
