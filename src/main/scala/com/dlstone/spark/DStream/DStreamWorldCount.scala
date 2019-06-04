@@ -16,7 +16,7 @@ object DStreamWorldCount {
     //第二个参数是最下批次产生的时间间隔
     val streamingContext = new StreamingContext(context, Milliseconds(5000))
 
-    //NetCat, nc -lk 9999
+    //NetCat, nc -l -p 9999
     val lines: ReceiverInputDStream[String] = streamingContext.socketTextStream("localhost", 9999)
 
     val words: DStream[String] = lines.flatMap(_.split(" "))

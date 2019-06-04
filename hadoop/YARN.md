@@ -46,6 +46,12 @@ YARN主从架构：
 Slave -- NM
 Master -- RM
 
+## MapReduce-On-Yarn
+1. MRAppMaster
+2. yarnChild(map task)
+3. yarnChild(reduce task)
+4. 提交Job的客户端
+
 ## 配置文件
 yarn-site.xml    
 

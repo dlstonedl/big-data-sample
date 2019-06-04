@@ -33,4 +33,4 @@ DataFrame方式
 jdbc：数据库
 json：json格式，没有值则为null
 csv：逗号隔开
-Parquet：列式存储
+Parquet：列式存储（spark默认数据源）
