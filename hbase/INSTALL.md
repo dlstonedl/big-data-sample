@@ -1,0 +1,50 @@
+# install HBase
+
+## install
+
+1. 修改hbase-env.sh
+```
+export JAVA_HOME=...
+//HBase自带的ZK
+export HBASE_MANAGES_ZK=false
+```
+
+2. 修改hbase-site.xml
+```
+<configuration> 
+    <!-- 指定hbase在HDFS上存储的路径 -->
+    <property>
+        <name>hbase.rootdir</name>
+        <value>hdfs://hdp01:9000/hbase</value>
+    </property>
+    
+    <!-- 指定hbase是分布式的 -->
+    <property>
+        <name>hbase.cluster.distributed</name>
+        <value>true</value>
+    </property>
+    
+    <!-- 指定zk的地址，多个用“,”分割 -->
+    <property>
+        <name>hbase.zookeeper.quorum</name>
+        <value>hdp01:2181,hdp02:2181,hdp03:2181</value>
+    </property>
+</configuration>
+```
+
+3. 修改regionservers
+RegionServer的机器名
+
+4. 启动hbase
+```
+//一次性启动
+bin/start-hbase.sh
+
+//启动单个
+bin/hbase-daemon.sh start master
+```
+
+## 客户端
+```
+bin/hbase shell
+```
