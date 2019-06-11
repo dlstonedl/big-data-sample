@@ -1,5 +1,8 @@
 # install HBase
 
+管理角色：HMaster，一般2台，一台active，一台backup
+数据节点角色：HRegionServer，应该与hdfs中的datanode安装在一起  
+
 ## install
 
 1. 修改hbase-env.sh
@@ -42,6 +45,24 @@ bin/start-hbase.sh
 
 //启动单个
 bin/hbase-daemon.sh start master
+```
+
+## 问题
+
+1. HBase与Hadoop jar包冲突 org.slf4j.impl.Log4jLoggerFactory
+删除其中一个jar即可
+```
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/Users/ldeng/hadoop/hadoop-3.1.2/share/hadoop/common/lib/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/Users/ldeng/bigdata/hbase-2.1.5/lib/client-facing-thirdparty/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+```
+
+2. 查看日志报错： java.lang.ClassNotFoundException: org.apache.htrace.SamplerBuilder
+```
+cd $HBASE_HOME
+cp lib/client-facing-thirdparty/htrace-core-3.1.0-incubating.jar lib/
 ```
 
 ## 客户端
