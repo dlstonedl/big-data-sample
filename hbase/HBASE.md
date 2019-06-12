@@ -36,6 +36,12 @@ log文件
 2. 去meta表查找数据所在的region信息(meta表：所有表的region信息)
 3. 去目标region server查找所需信息
 
+## 高级特性
+1. 批量数据快速导入HBase -- BulkLoad
+2. HBase性能优化
+3. MapReduce分析HBase中数据
+4. HBase数据建索引 -- 过滤查询；二级索引（协处理器，Solr，ES）
+
 
 
 
