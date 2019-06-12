@@ -2,14 +2,13 @@ package com.dlstone.hbase;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.junit.Test;
 
 import java.io.IOException;
 
-public class HBaseClientDemo {
+public class HBaseClientDDLDemo {
 
     /**
      * hbase-client中包含hadoop-auth，注意与hadoop-client版本的匹配
@@ -17,7 +16,7 @@ public class HBaseClientDemo {
     @Test
     public void testCreateTable() throws IOException {
         Configuration config = HBaseConfiguration.create();
-        config.set("hbase.zookeeper.quorum", "localhost:2181");
+//        config.set("hbase.zookeeper.quorum", "localhost:2181");
         Connection conn = ConnectionFactory.createConnection(config);
 
         //从conn中构造一个DDL操作器
@@ -37,7 +36,7 @@ public class HBaseClientDemo {
     @Test
     public void testDropTable() throws IOException {
         Configuration config = HBaseConfiguration.create();
-        config.set("hbase.zookeeper.quorum", "localhost:2181");
+//        config.set("hbase.zookeeper.quorum", "localhost:2181");
         Connection conn = ConnectionFactory.createConnection(config);
 
         Admin admin = conn.getAdmin();
@@ -64,7 +63,7 @@ public class HBaseClientDemo {
 
         admin.modifyTable(tableDescriptor);
 
-
-
+        admin.close();
+        conn.close();
     }
 }
