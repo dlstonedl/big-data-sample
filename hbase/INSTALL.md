@@ -65,6 +65,41 @@ cd $HBASE_HOME
 cp lib/client-facing-thirdparty/htrace-core-3.1.0-incubating.jar lib/
 ```
 
+3. ZK报错
+```
+Could not start ZK at requested port of 2181.  ZK was started at port: 2182.  Aborting as clients (e.g. shell) will not be able to find this ZK quorum.
+
+<property>
+  <name>hbase.cluster.distributed</name>
+  <value>true</value> 
+</property>
+```
+
+4. Master报错
+```
+java.lang.IllegalStateException: The procedure WAL relies on the ability to hsync for proper operation during component failures, but the underlying filesystem does not support doing so
+
+<property>
+   <name>hbase.unsafe.stream.capability.enforce</name>
+   <value>false</value>
+</property>
+```
+
+5. RegionServer报错
+```
+java.lang.NoClassDefFoundError: Could not initialize class org.apache.hadoop.hbase.io.asyncfs.FanOutOneBlockAsyncDFSOutputHelper
+
+<property>
+   <name>hbase.wal.provider</name>
+   <value>filesystem</value>
+</property>
+```
+
+## web管理页面
+```
+http://localhost:16010/
+```
+
 ## 客户端
 ```
 bin/hbase shell
