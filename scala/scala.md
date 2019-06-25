@@ -29,6 +29,15 @@ yield
 ## 继承
 trait(特征)：一般情况下，scala的类只能继承单一父亲，但trait可以继承多个；
 
-
+## 函数和方法
+```
+//函数
+(a: Int, b Int) => a + b
+val fun1:(Int, Int) => Int = (a, b) => a + b
+//方法
+def add(a: Int, b: Int): Int = a + b
+//方法转函数
+add _
+```
  
 
