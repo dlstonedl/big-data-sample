@@ -18,11 +18,11 @@ s: 字符串中可以直接使用变量，如$name，可以使用任意表达式
 运算符实际上是方法
 
 ## for循环
-1 to 5
-1 until 5
+to: 1 to 5, [1, 5]  
+until: 1 until 5, [1, 5)  
 yield
-循环过滤
-双层循环
+循环过滤: for(变量 <- 表达式/集合/数组; if 守卫)
+双层循环: for(i <- 0 to 3; j <- 0 to 3; if i != j)
 
 ## 访问修饰符
 private（内部可见，比Java严格），protected（子类可见，比Java严格），public；    
@@ -45,15 +45,26 @@ Object对象不能带参数；
 伴生类和伴生对象可以相互访问其私有成员；  
 
 ## 函数和方法
-```
-//函数
-(a: Int, b Int) => a + b
-val fun1:(Int, Int) => Int = (a, b) => a + b
-//方法
+方法的定义: def 方法名称(参数列表): 方法的返回值类型 = 方法体
 def add(a: Int, b: Int): Int = a + b
-//方法转函数
-add _
-```
+
+函数的定义(=>): 
+方式一: (函数的参数列表) => 函数体
+val add = (x: Int, y: Int) => x + y
+
+方式二: (函数的参数类型列表) => 函数的返回值类型 = (函数的参数变量引用) => 函数体
+val add:(Int, Int) => Int = (a, b) => a + b
+val prtf:String => Unit = msg => println(msg) 
+
+方法可以转换成函数: 方法名称 _
+
+函数作为参数传递:
+def add(f:(Int, Int) => Int, a: Int, b: Int) = {
+  f(a, b)
+}
+
+传名调用和传值调用: add(f, 2 + 8, 6)
+
 ### 偏应用函数
 ```
 //原函数
