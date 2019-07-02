@@ -34,3 +34,8 @@ jdbc：数据库
 json：json格式，没有值则为null
 csv：逗号隔开
 Parquet：列式存储（spark默认数据源）
+
+## 三种join方式
+1. Broadcast Join: 小表与大表Join（Hash Join，broadcast）
+2. Shuffle Hash Join: 小表（数据量比内存大）与大表Join（Hash Join，shuffle）
+3. Sort Merge Join: 两张较大表之间join（shuffle，sort, merge, 无需将表的数据加载至内存）
