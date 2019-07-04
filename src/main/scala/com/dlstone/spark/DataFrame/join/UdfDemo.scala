@@ -21,6 +21,7 @@ object UdfDemo {
       (eName, cName)
     })
     val nationMapInDriver = nationMapDS.collect()
+    //广播(必须使用sparkContext)
     val broadCastRef: Broadcast[Array[(String, String)]] = spark.sparkContext.broadcast(nationMapInDriver)
 
     val personDS: Dataset[String] = spark.read.textFile("src/main/scala/com/dlstone/spark/DataFrame/join/person.txt")
@@ -32,7 +33,9 @@ object UdfDemo {
     }).toDF("user_name", "nation")
     personDF.createTempView("v_person")
 
+    //定义一个自定义(UDF),并注册
     spark.udf.register("nation2CName", (nation: String) => {
+      //获取广播变量
       val nationsInExecutor: Array[(String, String)] = broadCastRef.value
       val cName: String = nationsInExecutor
         .find(nationMap => nationMap._1.equals(nation))
@@ -44,7 +47,6 @@ object UdfDemo {
     val result = spark.sql("SELECT nation2CName(nation) province, count(*) counts FROM v_person group by province order by counts DESC")
     result.show()
     spark.stop()
-
   }
 
 }

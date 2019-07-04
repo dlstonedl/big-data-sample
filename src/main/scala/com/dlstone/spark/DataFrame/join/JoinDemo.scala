@@ -25,7 +25,13 @@ object JoinDemo {
       ("Japan", "日本")
     ).toDF("eName", "cName")
 
-    val result: DataFrame = PersonFrame.join(NationFrame, $"nation" === $"eName")
+    //第一种，创建视图
+    PersonFrame.createTempView("v_person")
+    NationFrame.createTempView("v_nation")
+    val result = sparkSession.sql("SELECT name, nation, cName FROM v_person JOIN v_nation ON nation = eName")
+
+    //第二种，API
+//    val result: DataFrame = PersonFrame.join(NationFrame, $"nation" === $"eName")
 
     result.explain()
 
