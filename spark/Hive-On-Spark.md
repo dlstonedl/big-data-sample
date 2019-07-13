@@ -11,3 +11,6 @@
 5. 在环境变量中配置HADOOP_CONF_DIR,让SparkSQL知道hdfs中NameNode的位置；
 6. 重新启动sparkSQL命令行；
 
+使用Hive的标准，给Hive换了一个执行引擎(MR -> Spark)
+Hive本身使用的是MR
+
